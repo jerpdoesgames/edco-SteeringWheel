@@ -1,6 +1,6 @@
 # Logitech G29 Racing Wheel Support for Easy Delivery Company
 
-Based on the SteeringWheel plugin by craftxbox
+Based on the [SteeringWheel](https://github.com/craftxbox/edco-SteeringWheel) plugin by [craftxbox](https://github.com/craftxbox)
 
 Game can be found here: https://store.steampowered.com/app/3293010/Easy_Delivery_Co/
 
