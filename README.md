@@ -9,4 +9,4 @@ This plugin requires BepInEx: https://github.com/BepInEx/BepInEx
 To use, just drop `SteeringWheel.dll` in `Steam\steamapps\common\Easy Delivery Co\BepInEx\plugins`
 
 
-This has only been tested with a Logitech 629 Racing Wheel on Windows 10 with the switch set to `PS4`.  I have no idea if this will work for anyone else but me, and I probably can't offer any support for it.
+This has only been tested with a Logitech G29 Racing Wheel on Windows 10 with the switch set to `PS4`.  I have no idea if this will work for anyone else but me, and I probably can't offer any support for it.
