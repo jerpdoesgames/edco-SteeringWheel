@@ -85,8 +85,8 @@ namespace SteeringWheel
                         mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.HONK, "button8"));
                         mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.BRAKE_BACK, "button6"));
                         mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.LIGHTS, "button5"));
-                        mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.RADIO_CHANNEL_PREVIOUS, "button22"));
-                        mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.RADIO_CHANNEL_NEXT, "button23"));
+                        mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.RADIO_CHANNEL_PREVIOUS, "button23"));
+                        mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.RADIO_CHANNEL_NEXT, "button22"));
                         mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.RADIO_SCAN, "button20"));
                         mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.RADIO_SCAN, "button21"));
                         mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.RADIO_ON, "button24"));
