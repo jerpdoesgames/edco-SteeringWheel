@@ -82,9 +82,9 @@ namespace SteeringWheel
 
                         mappableButtons = new List<ManagedSimpleButton>();
                         mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.INTERACT_OK, "button7"));
-                        mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.HONK, "button8"));
+                        mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.HONK, "button5"));
                         mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.BRAKE_BACK, "button6"));
-                        mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.LIGHTS, "button5"));
+                        mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.LIGHTS, "button8"));
                         mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.RADIO_CHANNEL_PREVIOUS, "button23"));
                         mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.RADIO_CHANNEL_NEXT, "button22"));
                         mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.RADIO_SCAN, "button20"));
@@ -95,6 +95,13 @@ namespace SteeringWheel
                         mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.JOB_SELECTION, "hat/right"));
                         mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.PAUSE, "button25"));
                         mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.RESET_HOLD, "button9"));
+
+                        mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.MOVEMENT_X_TRIPLE, "button13"));
+                        mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.MOVEMENT_Y_DOUBLE, "button14"));
+                        mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.MOVEMENT_X_DOUBLE, "button15"));
+                        mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.MOVEMENT_Y_HALF, "button16"));
+                        mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.MOVEMENT_X_HALF, "button17"));
+                        mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.MOVEMENT_Y_REVERSE, "button18"));
                     }
                 }
             }
@@ -158,6 +165,30 @@ namespace SteeringWheel
                                     __instance.radioInput.x = curState ? 1 : 0;
                                     __instance.radioPressed = curState;
                                     break;
+
+                                case SteeringWheel.mappableButtonType.MOVEMENT_X_DOUBLE:
+                                    SteeringWheel.steerMult = curState ? 2.0f : 1.0f;
+                                    break;
+
+                                case SteeringWheel.mappableButtonType.MOVEMENT_Y_HALF:
+                                    SteeringWheel.gasMult = curState ? 0.5f : 1.0f;
+                                    break;
+
+                                case SteeringWheel.mappableButtonType.MOVEMENT_X_TRIPLE:
+                                    SteeringWheel.steerMult = curState ? 3.0f : 1.0f;
+                                    break;
+
+                                case SteeringWheel.mappableButtonType.MOVEMENT_Y_DOUBLE:
+                                    SteeringWheel.gasMult = curState ? 2.0f : 1.0f;
+                                    break;
+
+                                case SteeringWheel.mappableButtonType.MOVEMENT_X_HALF:
+                                    SteeringWheel.steerMult = curState ? 0.5f : 1.0f;
+                                    break;
+
+                                case SteeringWheel.mappableButtonType.MOVEMENT_Y_REVERSE:
+                                    SteeringWheel.gasMult = curState ? -1.0f : 1.0f;
+                                    break;
                             }
                         }
                         // Buttons that can be held
@@ -168,7 +199,6 @@ namespace SteeringWheel
                                 __instance.backReleased = !curState;
                                 break;
                         }
-
                     }
                 }
             }
@@ -184,16 +214,18 @@ namespace SteeringWheel
         }
         static void Prefix(sCarController __instance)
         {
-            foreach (Joystick curJoystick in UnityEngine.InputSystem.Joystick.all)
+            if (SteeringWheel.wheelDevice != null)
             {
-                if (curJoystick.displayName == SteeringWheel.TARGET_CONTROLLER)
+                float gasPedalValue = ((float)SteeringWheel.wheelDevice.GetChildControl("Z").ReadValueAsObject() * -0.5f) + 0.5f;
+                float breakPedalValue = ((float)SteeringWheel.wheelDevice.GetChildControl("Rz").ReadValueAsObject() * -0.5f) + 0.5f;
+                float xValue = SteeringWheel.wheelDevice.stick.x.ReadUnprocessedValue();
+                if (xValue < SteeringWheel.deadZonePercent && xValue > SteeringWheel.deadZonePercent * -1)
                 {
-                    float gasPedalValue = ((float)curJoystick.GetChildControl("Z").ReadValueAsObject() * -0.5f) + 0.5f;
-                    float breakPedalValue = ((float)curJoystick.GetChildControl("Rz").ReadValueAsObject() * -0.5f) + 0.5f; ;
-                    __instance.input.y = gasPedalValue > 0 ? gasPedalValue : breakPedalValue * -1;
-                    __instance.input.x = Math.Max(-1.0f, Math.Min(curJoystick.stick.x.ReadValue() * SteeringWheel.steerMult, 1.0f));
-                    break;
+                    xValue = 0.0f;
                 }
+
+                __instance.input.y = gasPedalValue > 0 ? gasPedalValue * SteeringWheel.gasMult : breakPedalValue * SteeringWheel.gasMult * -1;
+                __instance.input.x = Math.Max(-1.0f, Math.Min(xValue * SteeringWheel.steerMultBase * SteeringWheel.steerMult, 1.0f));
             }
         }
     }
@@ -217,13 +249,24 @@ namespace SteeringWheel
             RADIO_CHANNEL_PREVIOUS,
             RADIO_CHANNEL_NEXT,
             RADIO_SCAN,
-            HONK
+            HONK,
+            MOVEMENT_X_TRIPLE, //  Sets wheel to 3.0 for huge sensitivity (Gear 1, top-left)
+            MOVEMENT_X_DOUBLE, //  Sets wheel to 2.0 for extra movement (Gear 3, top-center)
+            MOVEMENT_X_HALF, //  Super smooth scale for wheel (Gear 5)
+            MOVEMENT_Y_DOUBLE, //  2.0 scale for gas (Gear 2, bottom-left)
+            MOVEMENT_Y_HALF, //  Smoother acceleration / breaking (Gear 4, bottom-center)
+            MOVEMENT_Y_REVERSE //  Reverse gear (gear 6, bottom-right / button18, though it should be 19 - unsure why my G29 is missing the 7th gear slot?)
         }
 
         public static Joystick wheelDevice;
         public static List<ManagedSimpleButton> mappableButtons;
 
-        public static float steerMult = 2.0f;
+        public static float steerMultBase = 1.0f;
+        public static float steerMult = 1.0f;
+        public static float gasMult = 1.0f;
+        // G29 defaults to a max of 900 degrees, though the game's maximum rotation is roughly 800
+        // G29 tends to center under about 10 degrees (closer to 4-6)
+        public static float deadZonePercent = 0.0125f;
 
         public static ManualLogSource thisLogger;
         private void Awake()

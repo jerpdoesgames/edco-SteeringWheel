@@ -16,8 +16,8 @@ This has only been tested with a [Logitech G29 Racing Wheel](https://www.logitec
 * **Gas Pedal**: Move Forward
 * **Brake Pedal**: Move Backward
 * **L1 (metal bar)**: Brake/Back
-* **R1 (metal bar)**: Lights
-* **L2**: Honk Horn
+* **R1 (metal bar)**: Honk Horn
+* **L2**: Lights
 * **R2**: Interact/OK
 * **DPad Up**: Camera
 * **DPad Left**: Map/Items
@@ -28,3 +28,14 @@ This has only been tested with a [Logitech G29 Racing Wheel](https://www.logitec
 * **Red Wheel Button**: Radio On/Off
 * **Playstation Button**: Pause
 * **Share Button**: Reset (instant - no hold required)
+
+**Note**: Effects from the shifter are only present while the button is held (so re-centering the shifter or changing gears undoes the previous effect).
+
+For some reason, the G29 I'm testing with does not appear to have the 7th (Reverse) gear position, so I'm using Gear 6 for reverse.
+
+* **Shifter - Gear 1 (top-left)**: Triple wheel sensitivity for faster turning
+* **Shifter - Gear 2 (bottom-left)**: Double wheel sensitivity for faster turning
+* **Shifter - Gear 3 (top-left)**: Halves wheel sensitivity for slower, smoother turning
+* **Shifter - Gear 4 (bottom-left)**: Doubles gas/brake pedal sensitivity
+* **Shifter - Gear 5 (top-right)**: Halves gas/brake pedal sensitivity
+* **Shifter - Gear 6 (bottom-right)**: Reverse gas/brake pedals (reverse gear)
