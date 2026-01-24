@@ -10,6 +10,11 @@ To use, just drop `SteeringWheel.dll` in `Steam\steamapps\common\Easy Delivery C
 
 This has only been tested with the Playstation 3/4 version of the [Logitech G29 Racing Wheel](https://www.logitechg.com/en-us/shop/p/driving-force-racing-wheel.941-000110) on Windows 10 with the switch set to `PS4`.  I have no idea if this will work for anyone else but me, and I probably can't offer any support for it.
 
+In the Logitech G HUB software, I'd recommend the following settings:
+* Sensitivity: 50
+* Operating Range (Angle): 840
+* Centering Spring Strength: 20 (and check the box for "Centering Spring in Non Force Feedback Games")
+
 ## Button Mappings
 
 * **Wheel Turn**: Steer Left/Right
