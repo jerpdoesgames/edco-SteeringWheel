@@ -9,7 +9,6 @@ using static SteeringWheel.SteeringWheel;
 
 namespace SteeringWheel
 {
-
     public class ManagedSimpleButton
     {
         public bool lastState = false;
@@ -57,7 +56,6 @@ namespace SteeringWheel
                 {
                     SteeringWheel.thisLogger.LogInfo("Failed to get button with Path " + aPath + " | " + e.Message);
                 }
-                
             }
         }
     }
@@ -81,32 +79,38 @@ namespace SteeringWheel
                         SteeringWheel.wheelDevice = curJoystick;
 
                         mappableButtons = new List<ManagedSimpleButton>();
-                        mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.INTERACT_OK, "button7"));
                         mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.HONK, "button5"));
                         mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.BRAKE_BACK, "button6"));
+                        mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.LIGHTS, "button7"));
                         mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.LIGHTS, "button8"));
+                        mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.LIGHTS, "button11"));
+                        mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.LIGHTS, "button12"));
                         mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.RADIO_CHANNEL_PREVIOUS, "button23"));
                         mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.RADIO_CHANNEL_NEXT, "button22"));
                         mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.RADIO_SCAN, "button20"));
-                        mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.RADIO_SCAN, "button21"));
                         mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.RADIO_ON, "button24"));
-                        mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.CAMERA, "hat/up"));
-                        mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.MAP_ITEMS, "hat/left"));
-                        mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.JOB_SELECTION, "hat/right"));
+                        mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.CAMERA, "button21"));
+                        mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.MAP_ITEMS, "/button2"));
+                        mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.JOB_SELECTION, "button4"));
+                        mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.PAUSE, "button10"));
                         mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.PAUSE, "button25"));
                         mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.RESET_HOLD, "button9"));
-
                         mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.MOVEMENT_X_TRIPLE, "button13"));
                         mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.MOVEMENT_Y_DOUBLE, "button14"));
                         mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.MOVEMENT_X_DOUBLE, "button15"));
                         mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.MOVEMENT_Y_HALF, "button16"));
                         mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.MOVEMENT_X_HALF, "button17"));
                         mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.MOVEMENT_Y_REVERSE, "button18"));
+                        mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.INTERACT_OK, "trigger"));
+                        mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.BRAKE_BACK, "button3"));
+                        mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.PLAYER_INPUT_UP, "hat/up"));
+                        mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.PLAYER_INPUT_DOWN, "hat/down"));
+                        mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.PLAYER_INPUT_LEFT, "hat/left"));
+                        mappableButtons.Add(new ManagedSimpleButton(mappableButtonType.PLAYER_INPUT_RIGHT, "hat/right"));
                     }
                 }
             }
-
-            if (SteeringWheel.wheelDevice != null)
+            else
             {
                 foreach (ManagedSimpleButton curButton in SteeringWheel.mappableButtons)
                 {
@@ -143,60 +147,81 @@ namespace SteeringWheel
                                     __instance.inventoryPressed = curState;
                                     __instance.inventoryReleased = !curState;
                                     break;
-
                                 case SteeringWheel.mappableButtonType.RESET_HOLD:
                                     __instance.resetHeld = curState;
                                     break;
-
                                 case SteeringWheel.mappableButtonType.RADIO_ON:
-                                    __instance.radioInput.y = curState ? -1 : 0;
-                                    __instance.radioPressed = curState;
+                                    __instance.radioInput.y = curState ? -1 : __instance.radioInput.y;
+                                    if (curState) { __instance.radioPressed = true; }
                                     break;
                                 case SteeringWheel.mappableButtonType.RADIO_SCAN:
-                                    __instance.radioInput.y = curState ? 1 : 0;
-                                    __instance.radioPressed = curState;
+                                    __instance.radioInput.y = curState ? 1 : __instance.radioInput.y;
+                                    if (curState) { __instance.radioPressed = true; }
                                     break;
-
                                 case SteeringWheel.mappableButtonType.RADIO_CHANNEL_PREVIOUS:
-                                    __instance.radioInput.x = curState ? -1 : 0;
-                                    __instance.radioPressed = curState;
+                                    __instance.radioInput.x = curState ? -1 : __instance.radioInput.x;
+                                    if (curState) { __instance.radioPressed = true; }
                                     break;
                                 case SteeringWheel.mappableButtonType.RADIO_CHANNEL_NEXT:
-                                    __instance.radioInput.x = curState ? 1 : 0;
-                                    __instance.radioPressed = curState;
+                                    __instance.radioInput.x = curState ? 1 : __instance.radioInput.x;
+                                    if (curState) { __instance.radioPressed = true; }
                                     break;
 
                                 case SteeringWheel.mappableButtonType.MOVEMENT_X_DOUBLE:
                                     SteeringWheel.steerMult = curState ? 2.0f : 1.0f;
                                     break;
-
                                 case SteeringWheel.mappableButtonType.MOVEMENT_Y_HALF:
                                     SteeringWheel.gasMult = curState ? 0.5f : 1.0f;
                                     break;
-
                                 case SteeringWheel.mappableButtonType.MOVEMENT_X_TRIPLE:
                                     SteeringWheel.steerMult = curState ? 3.0f : 1.0f;
                                     break;
-
                                 case SteeringWheel.mappableButtonType.MOVEMENT_Y_DOUBLE:
                                     SteeringWheel.gasMult = curState ? 2.0f : 1.0f;
                                     break;
-
                                 case SteeringWheel.mappableButtonType.MOVEMENT_X_HALF:
                                     SteeringWheel.steerMult = curState ? 0.5f : 1.0f;
                                     break;
-
                                 case SteeringWheel.mappableButtonType.MOVEMENT_Y_REVERSE:
                                     SteeringWheel.gasMult = curState ? -1.0f : 1.0f;
                                     break;
                             }
                         }
+
                         // Buttons that can be held
                         switch (curButton.buttonType)
                         {
                             case SteeringWheel.mappableButtonType.BRAKE_BACK:
-                                __instance.breakPressed = curState;
-                                __instance.backReleased = !curState;
+                                __instance.breakPressed = curState ? true : __instance.breakPressed;
+                                __instance.backReleased = !curState || __instance.backReleased;
+                                break;
+                            case SteeringWheel.mappableButtonType.PLAYER_INPUT_UP:
+                                if (curState)
+                                {
+                                    __instance.playerInput.y = 1;
+                                    __instance.radioInput.y = 1; // radioInput without radioPressed = menu input
+                                }
+                                break;
+                            case SteeringWheel.mappableButtonType.PLAYER_INPUT_DOWN:
+                                if (curState)
+                                {
+                                    __instance.playerInput.y = -1;
+                                    __instance.radioInput.y = -1; // radioInput without radioPressed = menu input
+                                }
+                                break;
+                            case SteeringWheel.mappableButtonType.PLAYER_INPUT_LEFT:
+                                if (curState)
+                                {
+                                    __instance.playerInput.x = -1;
+                                    __instance.radioInput.x = -1; // radioInput without radioPressed = menu input
+                                }
+                                break;
+                            case SteeringWheel.mappableButtonType.PLAYER_INPUT_RIGHT:
+                                if (curState)
+                                {
+                                    __instance.playerInput.x = 1;
+                                    __instance.radioInput.x = 1; // radioInput without radioPressed = menu input
+                                }
                                 break;
                         }
                     }
@@ -255,7 +280,11 @@ namespace SteeringWheel
             MOVEMENT_X_HALF, //  Super smooth scale for wheel (Gear 5)
             MOVEMENT_Y_DOUBLE, //  2.0 scale for gas (Gear 2, bottom-left)
             MOVEMENT_Y_HALF, //  Smoother acceleration / breaking (Gear 4, bottom-center)
-            MOVEMENT_Y_REVERSE //  Reverse gear (gear 6, bottom-right / button18, though it should be 19 - unsure why my G29 is missing the 7th gear slot?)
+            MOVEMENT_Y_REVERSE, //  Reverse gear (gear 6, bottom-right / button18, though it should be 19 - unsure why my G29 is missing the 7th gear slot?)
+            PLAYER_INPUT_UP,    // Generic directional input
+            PLAYER_INPUT_RIGHT,    // Generic directional input
+            PLAYER_INPUT_DOWN,    // Generic directional input
+            PLAYER_INPUT_LEFT,    // Generic directional input
         }
 
         public static Joystick wheelDevice;

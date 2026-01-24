@@ -8,7 +8,7 @@ This plugin requires BepInEx: https://github.com/BepInEx/BepInEx
 
 To use, just drop `SteeringWheel.dll` in `Steam\steamapps\common\Easy Delivery Co\BepInEx\plugins`
 
-This has only been tested with a [Logitech G29 Racing Wheel](https://www.logitechg.com/en-us/shop/p/driving-force-racing-wheel.941-000110) on Windows 10 with the switch set to `PS4`.  I have no idea if this will work for anyone else but me, and I probably can't offer any support for it.
+This has only been tested with the Playstation 3/4 version of the [Logitech G29 Racing Wheel](https://www.logitechg.com/en-us/shop/p/driving-force-racing-wheel.941-000110) on Windows 10 with the switch set to `PS4`.  I have no idea if this will work for anyone else but me, and I probably can't offer any support for it.
 
 ## Button Mappings
 
@@ -18,20 +18,29 @@ This has only been tested with a [Logitech G29 Racing Wheel](https://www.logitec
 * **L1 (metal bar)**: Brake/Back
 * **R1 (metal bar)**: Honk Horn
 * **L2**: Lights
-* **R2**: Interact/OK
-* **DPad Up**: Camera
-* **DPad Left**: Map/Items
-* **DPad Right**: Job Selection
-* **+/-**: Radio Scan
+* **LR**: Lights
+* **L3**: Lights
+* **L3**: Lights
+* **(Triangle)**: Map
+* **(Square)**: Jobs
+* **(Cross/X)**: Interact/OK
+* **(Circle)**: Brake/Back
+* **DPad Up**: On-Foot Move Up, Menu Up
+* **DPad Down**: On-Foot Move Down, Menu Down
+* **DPad Left**: On-Foot Move Left, Menu Left
+* **DPad Right**: On-Foot Move Right, Menu Right
+* **(+)**: Radio Scan
+* **(-)**: Camera
 * **Red Wheel Counter-Clockwise**: Previous Radio Channel
 * **Red Wheel Clockwise**: Next Radio Channel
 * **Red Wheel Button**: Radio On/Off
 * **Playstation Button**: Pause
+* **Options Button**: Pause
 * **Share Button**: Reset (instant - no hold required)
 
 **Note**: Effects from the shifter are only present while the button is held (so re-centering the shifter or changing gears undoes the previous effect).
 
-For some reason, the G29 I'm testing with does not appear to have the 7th (Reverse) gear position, so I'm using Gear 6 for reverse.
+Despite having a 7th/Reverse gear (Press the shifter in, then move the shifter), I've opted to use gear 6 for reverse gear just for comfort/convenience.
 
 * **Shifter - Gear 1 (top-left)**: Triple wheel sensitivity for faster turning
 * **Shifter - Gear 2 (bottom-left)**: Double wheel sensitivity for faster turning
